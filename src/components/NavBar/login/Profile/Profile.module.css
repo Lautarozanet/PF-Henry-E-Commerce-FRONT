@@ -1,0 +1,131 @@
+.cont {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.conten {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	align-content: stretch;
+	justify-content: space-around;
+	color: whitesmoke;
+	min-height: 759px;
+	background-color: #142328d5;
+	padding: 20px;
+}
+.barPerfil {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 900px;
+	height: 100%;
+	background-color: #142328d5;
+	box-shadow: 2px 2px 25px #0d0f0fcc;
+	color: whitesmoke;
+}
+.imgPerfil {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 30px;
+}
+.img {
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	box-shadow: 2px 2px 25px #808c90cc;
+}
+.infoPerfil {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin-top: 10px;
+	margin-right: 10px;
+	padding: 25px;
+	width: 320px;
+	height: 500px;
+}
+
+.btn {
+	margin-left: 10px;
+	width: 120px;
+	height: 25px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+	border: none;
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}
+.btn:disabled {
+	background-color: #313232;
+	color: rgb(114, 114, 114);
+}
+
+/* controel de compras */
+
+.conCompra {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin-top: 10px;
+	margin-right: 10px;
+	padding: 25px;
+	width: 50%;
+}
+
+.contG {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-bottom: 30px;
+}
+.contItem {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.producCard {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-color: #142328;
+	width: 700px;
+	height: 200px;
+	padding: 23px;
+	border-radius: 23px;
+	/* cursor: pointer; */
+	box-shadow: 2px 2px 15px #142328cc;
+}
+
+.cimg {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 150px;
+	background-color: whitesmoke;
+	border-radius: 23px;
+	border: none;
+	margin: 0 !important;
+}
+.img2 {
+	max-width: 120px;
+	max-height: 120px;
+	padding: 5px;
+	margin: 1rem;
+}
