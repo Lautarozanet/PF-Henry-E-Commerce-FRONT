@@ -60,7 +60,7 @@ export const LOCALSTORAGEUSERINFO= "LOCALSTORAGEUSERINFO"
 //RUTAS GET
 export function getAllPurchases() {
     return async function (dispatch) {
-        const purchasesInfo = await axios.get(`http://localhost:3001/purchase`)
+        const purchasesInfo = await axios.get(`/purchase`)
         dispatch({
             type: GET_ALL_PURCHASES,
             payload: purchasesInfo.data
@@ -70,7 +70,7 @@ export function getAllPurchases() {
 
 export function getUserPurchases(id) {
     return async function (dispatch) {
-        const purchasesInfo = await axios.get(`http://localhost:3001/purchase/${id}`)
+        const purchasesInfo = await axios.get(`/purchase/${id}`)
         dispatch({
             type: GET_USER_PURCHASES,
             payload: purchasesInfo.data
@@ -80,7 +80,7 @@ export function getUserPurchases(id) {
 
 export function getAllProducts() {
     return async function (dispatch) {
-        const productsInfo = await axios.get(`http://localhost:3001/products`)
+        const productsInfo = await axios.get(`/products`)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
@@ -90,7 +90,7 @@ export function getAllProducts() {
 
 export function getAllComments(id) {
     return async function (dispatch) {
-        const commentsInfo = await axios.get(`http://localhost:3001/comments/${id}`)
+        const commentsInfo = await axios.get(`/comments/${id}`)
         dispatch({
             type: GET_ALL_COMMENTS,
             payload: commentsInfo.data
@@ -100,7 +100,7 @@ export function getAllComments(id) {
 
 export function getAllReported() {
     return async function (dispatch) {
-        const reported = await axios.get('http://localhost:3001/reported');
+        const reported = await axios.get('/reported');
         dispatch({
             type: GET_ALL_REPORTED,
             payload: reported.data
@@ -110,7 +110,7 @@ export function getAllReported() {
 
 export function getAllUsers() {
     return async function (dispatch) {
-        const allUsers = await axios.get('http://localhost:3001/users')
+        const allUsers = await axios.get('/users')
         dispatch({
             type: GET_ALL_USERS,
             payload: allUsers.data
@@ -120,7 +120,7 @@ export function getAllUsers() {
 
 export function authTokenRouterPerf() {
     return async function (dispatch) {
-        const allUsers = await axios.get('http://localhost:3001/profile')
+        const allUsers = await axios.get('/profile')
         console.log("soy perf"+ allUsers.data.token)
         dispatch({
             type: GET_AUTHTOKENROUTERPERF,
@@ -141,7 +141,7 @@ export function setUserData(payload) {
 
 export function getUser(id) {
     return async function (dispatch) {
-        const user = await axios.get(`http://localhost:3001/users/${id}`)
+        const user = await axios.get(`/users/${id}`)
         dispatch({
             type: GET_USER,
             payload: user.data
@@ -151,7 +151,7 @@ export function getUser(id) {
 
 export function getFavorites(id) {
     return async function (dispatch) {
-        const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
+        const favorites = await axios.get(`/favorites/${id}`)
         dispatch({
             type: GET_FAVORITES,
             payload: favorites.data
@@ -161,7 +161,7 @@ export function getFavorites(id) {
 
 export function getAllCategories() {
     return async function (dispatch) {
-        const categoriesInfo = await axios.get('http://localhost:3001/categories')
+        const categoriesInfo = await axios.get('/categories')
         dispatch({
             type: GET_ALL_CATEGORIES,
             payload: categoriesInfo.data
@@ -185,7 +185,7 @@ export function getAllBrands(payload) {
                 payload: brands
             })
         } else {
-            const products = await axios.get('http://localhost:3001/products')
+            const products = await axios.get('/products')
             let brands = [];
             for (const p of products.data) {
                 if (p.brand) brands.push(p.brand)
@@ -202,7 +202,7 @@ export function getAllBrands(payload) {
 
 export function getProductDetail(id) {
     return async function (dispatch) {
-        const productDetail = await axios.get(`http://localhost:3001/products/${id}`)
+        const productDetail = await axios.get(`/products/${id}`)
         dispatch({
             type: GET_PRODUCT_DETAIL,
             payload: productDetail.data
@@ -212,7 +212,7 @@ export function getProductDetail(id) {
 
 export function getPurchaseDetail(payload) {
     return async function (dispatch) {
-        const productDetail = await axios.get(`http://localhost:3001/buyings/acceptpayment${payload}`)
+        const productDetail = await axios.get(`/buyings/acceptpayment${payload}`)
         dispatch({
             type: GET_PURCHASE_DETAIL,
             payload: productDetail
@@ -234,12 +234,12 @@ export function getGeoPosition(payload) {
 
 //RUTAS POST
 export async function reportComment(payload) {
-        await axios.post(`http://localhost:3001/reported/${payload.id}`, payload);
+        await axios.post(`/reported/${payload.id}`, payload);
     }
 
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
-        const json = await axios.post('http://localhost:3001/login/loginForm', payload)
+        const json = await axios.post('/login/loginForm', payload)
         // console.log(json);
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
@@ -250,7 +250,7 @@ export function authTokenRouterLog(payload) {
 
 export function createUser(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/users', payload)
+        const info = await axios.post('/users', payload)
         dispatch({
             type: CREATE_USER,
             payload: info.data
@@ -260,7 +260,7 @@ export function createUser(payload) {
 
 export function createProduct(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/products', payload)
+        const info = await axios.post('/products', payload)
         dispatch({
             type: CREATE_PRODUCT,
             payload: info.data
@@ -270,7 +270,7 @@ export function createProduct(payload) {
 
 export function createComment(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/comments', payload)
+        const info = await axios.post('/comments', payload)
         dispatch({
             type: CREATE_COMMENT,
             payload: info.data
@@ -280,7 +280,7 @@ export function createComment(payload) {
 
 export function createPurchase(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/purchase', payload)
+        const info = await axios.post('/purchase', payload)
         dispatch({
             type: CREATE_PURCHASE,
             payload: info.data
@@ -290,7 +290,7 @@ export function createPurchase(payload) {
 
 export function sendMail(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/send-mail', payload)
+        const info = await axios.post('/send-mail', payload)
         dispatch({
             type: SEND_MAIL,
             payload: info.data
@@ -300,7 +300,7 @@ export function sendMail(payload) {
 
 export function buyShoppingCart(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
+        const info = await axios.post('/buyings/createpayment', payload)
         console.log(info.data);
         window.location.href = info.data
         dispatch({
@@ -314,7 +314,7 @@ export function buyShoppingCart(payload) {
 
 export function updateUser(payload) {
     return async function (dispatch) {
-        const info = await axios.put(`http://localhost:3001/users/${payload.id}`, payload)
+        const info = await axios.put(`/users/${payload.id}`, payload)
         dispatch({
             type: UPDATE_USER,
             payload: info.data
@@ -325,7 +325,7 @@ export function updateUser(payload) {
 export function updateRatingProduct(payload) {
     let id = payload.id;
     return async function (dispatch) {
-        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
+        const info = await axios.put(`/products/${id}`, payload)
         dispatch({
             type: UPDATE_RATING,
             payload: info.data
@@ -336,7 +336,7 @@ export function updateRatingProduct(payload) {
 export function updateProduct(payload) {
     let id = payload.id;
     return async function (dispatch) {
-        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
+        const info = await axios.put(`/products/${id}`, payload)
         dispatch({
             type: UPDATE_PRODUCT,
             payload: info.data
@@ -346,7 +346,7 @@ export function updateProduct(payload) {
 
 export function updateComment(payload) {
     return async function (dispatch) {
-        const info = await axios.put('http://localhost:3001/comments', payload)
+        const info = await axios.put('/comments', payload)
         dispatch({
             type: UPDATE_COMMENT,
             payload: info.data
@@ -357,7 +357,7 @@ export function updateComment(payload) {
 //RUTAS DELETE
 export function deleteComment(idUser, idProduct) {
     return async function (dispatch) {
-        const deletedComment = await axios.delete(`http://localhost:3001/comments/${idUser}/${idProduct}`)
+        const deletedComment = await axios.delete(`/comments/${idUser}/${idProduct}`)
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
@@ -367,7 +367,7 @@ export function deleteComment(idUser, idProduct) {
 
 export function dismissReport(id) {
     return async function (dispatch) {
-        const dismissed = await axios.delete(`http://localhost:3001/reported/${id}`)
+        const dismissed = await axios.delete(`/reported/${id}`)
         dispatch({
             type: DISMISSED_REPORT,
             payload: dismissed.data
@@ -377,7 +377,7 @@ export function dismissReport(id) {
 
 export function deleteProduct(id) {
     return async function (dispatch) {
-        const deletedProduct = await axios.delete(`http://localhost:3001/products/${id}`)
+        const deletedProduct = await axios.delete(`/products/${id}`)
         dispatch({
             type: DELETE_PRODUCT,
             payload: deletedProduct.data
@@ -387,7 +387,7 @@ export function deleteProduct(id) {
 
 export function removeFavorite(id, idProduct) {
     return async function (dispatch) {
-        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}/${idProduct}`)
+        const deletedFavorite = await axios.delete(`/favorites/${id}/${idProduct}`)
         dispatch({
             type: REMOVE_FAVORITE,
             payload: deletedFavorite.data
@@ -397,7 +397,7 @@ export function removeFavorite(id, idProduct) {
 
 export function removeAllFavorites(id) {
     return async function (dispatch) {
-        const noFavorites = await axios.delete(`http://localhost:3001/favorites/${id}`)
+        const noFavorites = await axios.delete(`/favorites/${id}`)
         dispatch({
             type: REMOVE_FAVORITE,
             payload: noFavorites.data
@@ -453,7 +453,7 @@ export function removeFilters() {
 
 export function newSearch(productName) {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/products')
+        const productsInfo = await axios.get('/products')
 
         if (productsInfo.data !== "Please Create Categories First") {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
@@ -469,7 +469,7 @@ export function newSearch(productName) {
 
 export function searchByName(productName, typeR) {
     return async function (dispatch) {
-        const productsInfo = await axios.get(`http://localhost:3001/products`)
+        const productsInfo = await axios.get(`/products`)
 
         if (productsInfo.data !== "Please Create Categories First" && productName) {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
@@ -485,7 +485,7 @@ export function searchByName(productName, typeR) {
 
 export function addFavorites(payload) {
     return async function (dispatch) {
-        const info = await axios.post('http://localhost:3001/favorites', payload)
+        const info = await axios.post('/favorites', payload)
         dispatch({
             type: ADD_FAVORITE,
             payload: info.data
