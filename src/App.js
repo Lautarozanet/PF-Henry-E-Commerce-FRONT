@@ -10,6 +10,7 @@ import FooterBar from './components/Footer/FooterBar';
 import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/dashboard/CreateProduct/CreateProduct';
+import CreateCategories from './components/dashboard/CreateCategories/CreateCategories';
 import ProductSended from './components/dashboard/CreateProduct/ProductSended.jsx';
 import { Profile } from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
@@ -27,6 +28,8 @@ import Success from './components/NavBar/login/Profile/Success';
 import MyChatBot from './components/home/ChatBot/ChatBot.jsx';
 import PurchasesAdmin from './components/dashboard/PurchasesAdmin/PurchasesAdmin';
 import PrivateRoute from './components/PrivateRoute';
+import ReportedComments from './components/dashboard/ReportedComments/ReportedComments';
+import OutOfStock from './components/dashboard/OutOfStock/OutOfStock';
 
 function App() {
 	let location = useLocation();
@@ -86,7 +89,7 @@ function App() {
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
-			<Route path='/SearchResults' exact component={HomePage && MyChatBot} />
+			<Route path='/SearchResults' exact component={HomePage} />
 			<Route path='/product/:id' component={Product} />
 			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/CreateUser' component={CreateUser} />
@@ -94,8 +97,8 @@ function App() {
 			<Route path='/LoginForm' component={LoginForm} />
 			<Route exact path='/contact' component={ContactUs} />
 			<Route path='/favorites' component={ShowFavorites} />
-			<Route path='/SuccessPayment' component={SuccessedPayment}/>
-			
+			<Route path='/SuccessPayment' component={SuccessedPayment} />
+
 			<PrivateRoute
 				path='/update'
 				component={UpdateProduct}
@@ -104,7 +107,7 @@ function App() {
 			<PrivateRoute
 				path='/contact/messagesended'
 				component={messageSended}
-				isAllowed={userNow.admin}
+				isAllowed={isAllowed}
 			/>
 			<PrivateRoute
 				path='/create/product'
@@ -116,12 +119,25 @@ function App() {
 				component={ProductSended}
 				isAllowed={isAllowed && userNow.admin}
 			/>
-			
+
 			<PrivateRoute
 				path='/dashboard'
 				component={PurchasesAdmin}
 				isAllowed={isAllowed && userNow.admin}
 			/>
+			
+			<PrivateRoute
+				path='/reportedcomments'
+				component={ReportedComments}
+				isAllowed={isAllowed && userNow.admin}
+			/>
+			
+			<PrivateRoute
+				path='/outofstock'
+				component={OutOfStock}
+				isAllowed={isAllowed && userNow.admin}
+			/>
+
 			<PrivateRoute
 				exact
 				path='/profile'
@@ -133,10 +149,9 @@ function App() {
 				component={Buy}
 				isAllowed={isAllowed && !userNow.admin}
 			/>
-			<PrivateRoute
+			<Route
 				path='/cancelpayment'
 				component={CancelPayment}
-				isAllowed={isAllowed && !userNow.admin}
 			/>
 			<PrivateRoute
 				exact
@@ -150,7 +165,12 @@ function App() {
 				isAllowed={isAllowed}
 			/>
 
-			{/* {location.pathname === '/home' && <MyChatBot />} */}
+			<PrivateRoute path='/create/categories'
+				component={CreateCategories}
+				isAllowed={isAllowed && userNow.admin}
+			/>
+
+			{location.pathname === '/home' && <MyChatBot />}
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);

@@ -26,6 +26,7 @@ export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const POST_AUTHTOKENROUTERLOG = "GET_AUTHTOKENROUTERLOG"
 export const SEND_MAIL = "SEND_MAIL"
 export const PP_PURCHASE = "PP_PURCHASE"
+export const CREATE_CATEGORIES= "CREATE_CATEGORIES"
 
 
 //RUTAS PUT
@@ -34,12 +35,14 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const UPDATE_RATING = "UPDATE_RATING"
 export const SET_USER_DATA = "SET_USER_DATA"
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 export const DISMISSED_REPORT = "DISMISSED_REPORT"
+export const DELETE_CATEGORY = "DELETE_CATEGORY"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
@@ -148,16 +151,16 @@ export function getUser(id) {
         })
     }
 }
-
-export function getFavorites(id) {
-    return async function (dispatch) {
-        const favorites = await axios.get(`/favorites/${id}`)
-        dispatch({
-            type: GET_FAVORITES,
-            payload: favorites.data
-        })
-    }
-}
+// No existe
+// export function getFavorites(id) {
+//     return async function (dispatch) {
+//         const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
+//         dispatch({
+//             type: GET_FAVORITES,
+//             payload: favorites.data
+//         })
+//     }
+// }
 
 export function getAllCategories() {
     return async function (dispatch) {
@@ -240,6 +243,7 @@ export async function reportComment(payload) {
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
         const json = await axios.post('/login/loginForm', payload)
+        window.localStorage.setItem('loggedUser', JSON.stringify({email: payload.email, password: payload.password}));
         // console.log(json);
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
@@ -310,7 +314,27 @@ export function buyShoppingCart(payload) {
     }
 }
 
+export function createCategories(payload) {
+        return async function (dispatch) {
+            const info = await axios.post('/categories', payload)
+            dispatch({
+                type: CREATE_CATEGORIES,
+                payload: info.data
+            })
+        }
+}
+
 //RUTAS PUT
+
+export function updateCategory(payload){
+    return async function (dispatch) {
+        const info = await axios.put(`/categories/${payload.id}`, payload)
+        dispatch({
+            type: UPDATE_CATEGORY,
+            payload: info.data
+        })
+    }
+}
 
 export function updateUser(payload) {
     return async function (dispatch) {
@@ -355,6 +379,16 @@ export function updateComment(payload) {
 }
 
 //RUTAS DELETE
+
+export function deleteCategory(idCategory) {
+        return async function (dispatch) {
+            const deletedCategory = await axios.delete(`/categories/${idCategory}`)
+            dispatch({
+                type: DELETE_CATEGORY,
+                payload: deletedCategory.data
+            })
+        }
+}
 export function deleteComment(idUser, idProduct) {
     return async function (dispatch) {
         const deletedComment = await axios.delete(`/comments/${idUser}/${idProduct}`)

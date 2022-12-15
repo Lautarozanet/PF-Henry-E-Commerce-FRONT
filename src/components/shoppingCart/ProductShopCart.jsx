@@ -5,14 +5,14 @@ import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
 
 const ProductShopCart = () => {
-	const [total, setTotal] = useState(0);
+	const [total, setTotal] = useState(0.00);
 	const [productsSelected, setProductsSelected] = useState([]);
 	const history = useHistory();
 	const dispatch = useDispatch();
 	let cant = 0;
 
 	// Traer productos del localStorage ///
-	const seeProducts =useCallback( () => {
+	const seeProducts = useCallback(() => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
@@ -21,7 +21,8 @@ const ProductShopCart = () => {
 		setProductsSelected(cart);
 		let cant = cart;
 		totalAccount(cant);
-	},[]);
+		// eslint-disable-next-line
+	}, []);
 
 	useEffect(() => {
 		seeProducts();
@@ -67,14 +68,14 @@ const ProductShopCart = () => {
 			return p;
 		});
 		setProductsSelected(increase);
-
+		totalAccount(increase)
 		localStorage.setItem("cart", JSON.stringify(increase))
 	};
 
 	const resta = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
-		
+
 		const decrease = productsSelected.map((p) => {
 			if (p.id === Number(name) && p.amount !== 1) {
 				return {
@@ -101,6 +102,7 @@ const ProductShopCart = () => {
 					'total',
 					JSON.stringify(cant[0].price * cant[0].amount),
 				);
+				console.log(cant[0].price * cant[0].amount);
 			}
 
 			if (cant.length > 1) {
@@ -116,13 +118,14 @@ const ProductShopCart = () => {
 			setTotal(0);
 			localStorage.setItem('total', JSON.stringify(0));
 		}
+		console.log(total);
 	};
 	///////////////////////////////////////
 
 	// Comprar items: agregado localStorage
 	const buyItems = (event) => {
 		event.preventDefault();
-		localStorage.setItem('total', JSON.stringify(total));
+		localStorage.setItem('total', JSON.stringify(parseFloat(total)));
 		history.push('/buyproducts');
 	};
 	///////////////////////////////////////
@@ -196,7 +199,7 @@ const ProductShopCart = () => {
 					<div className={s.contT}>
 						<div className={s.contpago}>
 							<div>
-							{console.log(total)}
+								{console.log(total)}
 								{productsSelected.length ? (
 									<div>
 										<h2 className={s.precio}>Total: {Number(total).toFixed(2)}</h2>

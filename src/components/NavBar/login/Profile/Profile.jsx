@@ -28,7 +28,7 @@ export const Profile = () => {
 			</div>
 		);
 	}
-
+	console.log("userNow",userNow)
 	// Object.keys(userNow).length > 0 && !name ? setItems(userNow) : isAuthenticated ? setItems(user) : setItems(voidItem)
 
 	return (
@@ -37,13 +37,8 @@ export const Profile = () => {
 				<div className={s.conten}>
 					<div className={s.barPerfil}>
 						<div className={s.imgPerfil}>
-							{user ? (
-								<img
-									src={user.picture}
-									alt={user.name ? user.name : userNow.name}
-									className={s.img}
-								/>
-							) : userNow.picture ? (
+						
+							{userNow.picture ? (
 								<img
 									src={userNow.picture}
 									alt={userNow.name}
@@ -59,7 +54,7 @@ export const Profile = () => {
 						</div>
 					</div>
 					<div className={s.conCompra}>
-						<h2>Consola de Compras</h2>
+						<h2>Shopping Console</h2>
 						<div>
 							{userPurchases.length > 0
 								? userPurchases.map((p) => {
@@ -83,12 +78,14 @@ export const Profile = () => {
 																	/>
 																</div>
 																<div>
-																	<p>{producto.name}</p>
+																	<p className={s.nameP}>{producto.name}</p>
 																	<p>Amount: {producto.amount}</p>
 																</div>
 
 																<div>
-																	<p>Price: {producto.price}</p>
+																	<p className={s.precio}>
+																		Price: {producto.price}
+																	</p>
 																</div>
 															</div>
 														);

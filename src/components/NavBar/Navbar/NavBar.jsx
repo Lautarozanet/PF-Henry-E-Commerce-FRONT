@@ -13,6 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
 import { setUserData } from '../../../redux/actions';
+import Swal from 'sweetalert2';
 
 function NavBar() {
 	const dispatch = useDispatch();
@@ -27,12 +28,30 @@ function NavBar() {
 	const [flag, setFlag] = useState(true)
 	const [flagLogged, setFlagLogged] = useState(true)
 
+	// Renderización de favoritos //////////////////////
+	const [renderFavorites,setrenderFavorites] = useState(0)
+	
+	if(allUsers.length && renderFavorites === 0){
+		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === userNow.email)[0] : {}
+		if (exist) {
+			let { email, password } = exist
+			dispatch(authTokenRouterLog({ email, password, confirm: true }))
+			setrenderFavorites(1)
+		}
+	}
+	////////////////////////////////////////////////////
+
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
 		if (exist) {
 			let { email } = user
 			dispatch(authTokenRouterLog({ email, password: email, confirm: true }))
 		} else {
+			Swal.fire({
+			title: 'Loged in!',
+			icon: 'success'
+		}).then((result) => {
+			if (result.isConfirmed) {
 			let { email, given_name, family_name, nickname } = user
 			let data = {
 				email,
@@ -45,11 +64,13 @@ function NavBar() {
 			window.location.reload()
 		}
 		setFlag(!flag)
-	}
+	});
+	}}
 
 	const loginUser = () => {
 		console.log("userInfo", userInfo)
-		if (loggedUser) {
+		console.log(loggedUser)
+		if (loggedUser !== null) {
 			dispatch(setUserData({
 				id: userInfo.id,
 				username: userInfo.username,
@@ -64,7 +85,10 @@ function NavBar() {
 	}
 	useEffect(() => {
 		dispatch(getAllUsers());
+
 	}, [dispatch]);
+
+	
 
 	// useEffect(() => {
 	// 	const autenticarUsuario = () => {
@@ -108,6 +132,7 @@ function NavBar() {
 
 	function search(e) {
 		dispatch(newSearch(''));
+		
 	}
 
 	return (
@@ -125,14 +150,17 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{isAuthenticated && flag && !userNow.username ? exists() : ""}
-						{loggedUser && flagLogged && !userNow.username ? loginUser() : ""}
+						{isAuthenticated && flag && allUsers.length > 1 && !userNow.username ? exists() : ""}
+						{userInfo && flagLogged && !userNow.username ? loginUser() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[
+									{ anchor: 'Create Category', slug: '/create/categories' },
 									{ anchor: 'Create Product', slug: '/create/product' },
 									{ anchor: 'Update Product', slug: '/update' },
 									{ anchor: 'Purchases', slug: '/dashboard' },
+									{ anchor: 'Reported Comments', slug: '/reportedcomments' },
+									{ anchor: 'Items Out Of Stock', slug: '/outofstock' },
 								]}
 								dropdownTitle='DASHBOARD'
 							/>

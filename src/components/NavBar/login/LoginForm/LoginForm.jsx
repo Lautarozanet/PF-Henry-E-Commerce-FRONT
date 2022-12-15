@@ -1,40 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, /*useRef*/ } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authTokenRouterLog } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
+// import {ReCAPTCHA} from "react-google-recaptcha";
 // import { setUserData } from '../../../../redux/actions';
 
 // import queryString from 'query-string';
 
 export const LoginForm = ({ location }) => {
-
+	// const captcha = useRef(null);
+	// const [captchaValido, setCaptchaValido]= useState(null);
+	// const [userValido, setUserValido]= useState(false);
 	const { isLoading, loginWithRedirect } = useAuth0();
 	const history = useHistory();
 	const logg = useSelector((state) => state.login);
 	const dispatch = useDispatch();
-	const user1 = useSelector((state)=> state.user)
+	const user1 = useSelector((state) => state.user)
 	// const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
 	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	const [logged, setLogin] = useState({
-		email:"",
-		password:""
+		email: "",
+		password: ""
 	})
 
-	
-	useEffect (()=>{
-		if(logg.length>1){
+	// function onChange(value) {
+	// 	if(captcha.current.getValue()){
+	// 		console.log("el usuario no es un robot")
+	// 		setCaptchaValido(true);
+	// 	}
+
+	//   }
+
+	useEffect(() => {
+		if (logg.length > 1) {
 			window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 			window.localStorage.setItem("userInfo", JSON.stringify(user1))
 			history.push("/home")
 		}
-		if(user1.length>1){
+		if (user1.length > 1) {
 			history.push("/home")
 		}
 	})
-	
+
 	// useEffect(() => {
 	// 	const autenticarUsuario = () => {
 	// 		if(isAuthenticated){
@@ -48,7 +58,7 @@ export const LoginForm = ({ location }) => {
 	// 			name: googleUser.given_name,
 	// 			email:googleUser.email,
 	// 		}))}
-			
+
 	// 	  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 	// 	  console.log("userInfo", userInfo)
 	// 	  if(loggedUser) {
@@ -66,7 +76,7 @@ export const LoginForm = ({ location }) => {
 
 	// 	autenticarUsuario();
 	//   }, [dispatch, isAuthenticated,loggedUserJWT,loggedUser, user]);
-	
+
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -96,16 +106,23 @@ export const LoginForm = ({ location }) => {
 
 	function confirmUser(e) {
 		e.preventDefault();
-/* 		const value = e.target.value;
-		const property = e.target.name; */
+		/* 		const value = e.target.value;
+				const property = e.target.name; */
+		// if(captcha.current.getValue()){
+		// 	setUserValido(true);
+		// 	setCaptchaValido(true);
+		// }else{
+		// 	setUserValido(false);
+		// 	setCaptchaValido(false);
+		// }
 
 		/* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 		// seeUser();
-		dispatch(authTokenRouterLog({ ...logged, confirm: true }));
+		dispatch(authTokenRouterLog({ ...logged, confirm: true, logged: logged }));
 
 		//   console.log(a)
-		window.localStorage.setItem('loggedUser', JSON.stringify(logged));
+
 
 		// console.log(`logg despues del dispatch: ${logg}`);
 		// console.log(`user1: ${user1}`);
@@ -113,21 +130,23 @@ export const LoginForm = ({ location }) => {
 			alert('La contraseña es incorrecta');
 		} else {
 			setLogin({ email: '', password: '', admin: '' });
+			// alert('El usuario no existe')
 		}
 	}
-	
+
 	// if(logg){
 	// 	window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 	// 	history.push("/home")
 	// }
 	// console.log("antes del if:" + logg)
-	
-	
+
+
 
 	return (
-	
+
 		<div className={s.back_ground}>
 			<h1 className={s.form_title}>LOG IN WITH</h1>
+			{/* {!userValido && */}
 			<div className={s.conten_form}>
 				<div className={s.cont}>
 					<img src={logoSimbolo} alt='Logo simbolo' height={'40px'} />
@@ -152,6 +171,14 @@ export const LoginForm = ({ location }) => {
 							placeholder=' Password..'
 						/>
 					</div>
+					{/* <div className="recaptcha"> */}
+					{/* <ReCAPTCHA
+					ref={captcha}
+    				sitekey="6LcN83ojAAAAAO2-qushcDrZc9ji3UhAhMP9NV4Z"
+					onChange={onChange}
+						/>
+					</div>
+					{captchaValido === false && <div className='error-captcha'>Please accept Captcha!</div>} */}
 					<br />
 					<button
 						className={s.btn}
@@ -176,6 +203,7 @@ export const LoginForm = ({ location }) => {
 					</button>
 				</div>
 			</div>
+			{/* } */}
 		</div>
 	);
 };
