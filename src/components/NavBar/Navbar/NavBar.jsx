@@ -52,6 +52,7 @@ function NavBar() {
 			icon: 'success'
 		}).then((result) => {
 			if (result.isConfirmed) {
+				window.location.reload()
 			let { email, given_name, family_name, nickname } = user
 			let data = {
 				email,
