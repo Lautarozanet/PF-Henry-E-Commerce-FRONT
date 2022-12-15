@@ -2,13 +2,13 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	deleteComment,
+	/*deleteComment*/
 	dismissReport,
 	getAllProducts,
 	getAllPurchases,
 	getAllReported,
 } from '../../../redux/actions';
-import { Link, NavLink } from 'react-router-dom';
+// import { Link, NavLink } from 'react-router-dom';
 import s from './PurchasesAdmin.module.css';
 
 export default function PurchasesAdmin() {
@@ -16,6 +16,7 @@ export default function PurchasesAdmin() {
 	const allPurchases = useSelector((state) => state.purchasesAdmin);
 	const allProducts = useSelector((state) => state.allProducts);
 	const reportedComments = useSelector((state) => state.reportedComments);
+	// eslint-disable-next-line
 	const outOfStock =
 		allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
 
@@ -37,7 +38,7 @@ export default function PurchasesAdmin() {
 			return 0;
 		}
 	};
-
+// eslint-disable-next-line
 	const dismissedReport = (id) => {
 		dispatch(dismissReport(id));
 	};
